@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}{{ proyecto.nombre }}{% endblock %}
+
+{% block contenido %}
+<div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+        <a href="{% url 'proyectos:lista' %}" class="text-decoration-none">← Volver</a>
+        <h1 class="mt-2">{{ proyecto.nombre }}</h1>
+        <p class="text-secondary">{{ proyecto.descripcion|default:"Sin descripción." }}</p>
+    </div>
+
+    <div class="d-flex gap-2">
+        <a href="{% url 'proyectos:editar' proyecto.pk %}" class="btn btn-outline-primary">
+            Editar
+        </a>
+        <a href="{% url 'proyectos:eliminar' proyecto.pk %}" class="btn btn-outline-danger">
+            Eliminar
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="h4 mb-3">Tareas</h2>
+
+                {% for tarea in proyecto.tareas.all %}
+                    <div class="border rounded p-3 mb-3">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h3 class="h6 mb-1">
+                                    {% if tarea.completada %}✅{% else %}⬜{% endif %}
+                                    {{ tarea.titulo }}
+                                </h3>
+                                <p class="mb-1 text-secondary">
+                                    {{ tarea.descripcion|default:"Sin descripción." }}
+                                </p>
+                                {% if tarea.fecha_limite %}
+                                    <small class="text-muted">
+                                        Fecha límite: {{ tarea.fecha_limite|date:"d/m/Y" }}
+                                    </small>
+                                {% endif %}
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'proyectos:tarea_editar' tarea.pk %}"
+                                   class="btn btn-sm btn-outline-secondary">Editar</a>
+                                <a href="{% url 'proyectos:tarea_eliminar' tarea.pk %}"
+                                   class="btn btn-sm btn-outline-danger">Eliminar</a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-secondary">Este proyecto todavía no tiene tareas.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="h4 mb-3">Nueva tarea</h2>
+
+                <form method="POST" action="{% url 'proyectos:tarea_nueva' proyecto.pk %}">
+                    {% csrf_token %}
+                    {{ tarea_form.as_p }}
+                    <button type="submit" class="btn btn-success w-100">
+                        Guardar tarea
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

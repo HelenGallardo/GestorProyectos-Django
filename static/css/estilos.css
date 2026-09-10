@@ -1,0 +1,38 @@
+body {
+    background: #f7f8fa;
+}
+
+.card {
+    border: 0;
+}
+
+form p {
+    margin-bottom: 1rem;
+}
+
+form p label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: .35rem;
+}
+
+form p input:not([type="checkbox"]),
+form p textarea,
+form p select {
+    width: 100%;
+    padding: .55rem .75rem;
+    border: 1px solid #ced4da;
+    border-radius: .375rem;
+}
+
+.helptext {
+    display: block;
+    margin-top: .25rem;
+    font-size: .85rem;
+    color: #6c757d;
+}
+
+.errorlist {
+    color: #b02a37;
+    margin-bottom: .5rem;
+}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Editar tarea{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="h3 mb-4">Editar tarea</h1>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    <a href="{% url 'proyectos:detalle' object.proyecto.pk %}"
+                       class="btn btn-outline-secondary">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
